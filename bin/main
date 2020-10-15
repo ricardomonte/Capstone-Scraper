@@ -1,2 +1,7 @@
 #!/usr/bin/env ruby
-# puts "hello world"
+
+require './lib/scraper'
+
+minecraft_news = Scraper.new
+
+puts minecraft_news.display
