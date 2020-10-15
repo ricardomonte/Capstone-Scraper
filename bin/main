@@ -4,4 +4,7 @@ require './lib/scraper'
 
 minecraft_news = Scraper.new
 
-puts minecraft_news.display
+minecraft_news.display.length.times do |x|
+  puts minecraft_news.display[x]
+  sleep(5)
+end
