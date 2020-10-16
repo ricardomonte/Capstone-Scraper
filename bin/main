@@ -1,10 +1,69 @@
 #!/usr/bin/env ruby
 
 require './lib/scraper'
+require './lib/display'
 
-minecraft_news = Scraper.new
 
-minecraft_news.display.length.times do |x|
-  puts minecraft_news.display[x]
-  sleep(5)
+
+minecraft = Scraper.new.display
+
+# minecraft_news = DisplayForms.new
+
+def welcome
+  puts 'Welcome to Minecraft News from'
+  puts 'minecraftglobal.com'
+  puts 'Do you want all the news?(y/n):'
 end
+
+def get_anwser
+  anwser = gets.chomp
+  minecraft = Scraper.new.display
+  case anwser.upcase
+  when "Y"
+    puts 'Here you have'
+    sleep(1)
+    puts minecraft
+  when "N"
+    puts 'Do you want to see the titles firts'
+    title_anwser = gets.chomp
+    title_anwser.upcase
+  when !"N" || !"Y"
+    puts 'wrong input'
+  end
+end
+
+def title_anwser(title, arr)
+  case title
+  when 'Y'
+    minecraft_news = DisplayForms.new
+    minecraft_arr = minecraft_news.display_titles(arr)
+    puts minecraft_arr
+    puts 'do you want to read an specific news?(y/n)'
+    specific_new = gets.chomp
+    return minecraft_news, minecraft_arr, specific_new.upcase
+  when "N"
+    puts 'Thanks return soon'
+  when !"N" || !"Y"
+    puts 'wrong input'
+  end
+end
+
+def selection_anwser(title, minecraft_news, arr)
+  case title
+  when 'Y'
+    puts 'Select news from 1 to 10'
+    selected_news = gets.chomp
+    puts minecraft_news.display_specific(selected_news, arr)
+    puts 'Thank you for prefer us'
+  when "N"
+    puts 'Thanks return soon'
+  when !"N" || !"Y"
+    puts 'wrong input'
+  end
+end
+
+welcome
+answer_for_title = get_anwser 
+minecraft_news, minecraft_arr, answer_for_select = title_anwser(answer_for_title, minecraft)
+selection_anwser(answer_for_select, minecraft_news, minecraft_arr)
+
