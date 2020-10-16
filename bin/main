@@ -3,67 +3,106 @@
 require './lib/scraper'
 require './lib/display'
 
+module InteractUser
+  def welcome
+    puts 'Welcome to Minecraft News from'
+    puts 'minecraftglobal.com'
+  end
 
+  def get_anwser(arr)
+    something = true
+    while something
+      puts 'Do you want all the news?(y/n):'
+      anwser = gets.chomp
+      case anwser.upcase
+      when 'Y'
+        puts 'Here you have'
+        sleep 1
+        puts arr
+        return anwser
+        something = false
+      when 'N'
+        puts 'im sorry to ear that'
+        return anwser
+        something = false
+      else
+        puts 'wrong input'
+      end
+    end
+  end
 
-minecraft = Scraper.new.display
+  def title(title, arr, mine_news)
+    if title.upcase == 'N'
+      keep = true
+      while keep
+        puts 'Would you like to read the titles?(y/n)'
+        anwser = gets.chomp
+        case anwser.upcase
+        when 'Y'
+          puts 'Here you have'
+          sleep 2
+          puts mine_news.display_titles(arr)
+          return anwser.upcase
+          break
+        when 'N'
+          return anwser.upcase
+          break
+        else
+          puts 'wrong input'
+        end
+      end
+    else
+      puts 'Thanks return soon'
+      sleep 1
+      exit
+    end
+  end
 
-# minecraft_news = DisplayForms.new
-
-def welcome
-  puts 'Welcome to Minecraft News from'
-  puts 'minecraftglobal.com'
-  puts 'Do you want all the news?(y/n):'
-end
-
-def get_anwser
-  anwser = gets.chomp
-  minecraft = Scraper.new.display
-  case anwser.upcase
-  when "Y"
-    puts 'Here you have'
-    sleep(1)
-    puts minecraft
-  when "N"
-    puts 'Do you want to see the titles firts'
-    title_anwser = gets.chomp
-    title_anwser.upcase
-  when !"N" || !"Y"
-    puts 'wrong input'
+  def selection(title, arr, mine_news)
+    if title == 'Y'
+      puts 'do you want to read an specific news?(y/n)'
+      specific_new = gets.chomp
+      case specific_new.upcase
+      when 'Y'
+        keep = true
+        while keep
+          puts 'Select news from 1 to 10'
+          selected_news = gets.chomp.to_i
+          if selected_news.positive? && selected_news < 11
+            puts selected_news
+            puts 'Here you have'
+            sleep 2
+            puts mine_news.display_specific(selected_news, arr)
+            puts 'Thank you for prefer us'
+            break
+          else
+            puts 'not a valid input try again'
+          end
+        end
+      when 'N'
+        puts 'Thanks return soon'
+      else
+        puts 'wrong input'
+        selection_anwser(title, arr, minecraft_news)
+      end
+    else
+      puts 'Thanks return soon'
+      sleep 1
+      exit
+    end
   end
 end
 
-def title_anwser(title, arr)
-  case title
-  when 'Y'
+class StartScraper
+  include InteractUser
+  def start
+    minecraft = Scraper.new.display
     minecraft_news = DisplayForms.new
-    minecraft_arr = minecraft_news.display_titles(arr)
-    puts minecraft_arr
-    puts 'do you want to read an specific news?(y/n)'
-    specific_new = gets.chomp
-    return minecraft_news, minecraft_arr, specific_new.upcase
-  when "N"
-    puts 'Thanks return soon'
-  when !"N" || !"Y"
-    puts 'wrong input'
+    welcome
+    anwser = get_anwser(minecraft)
+    title = title(anwser, minecraft, minecraft_news)
+    selection(title, minecraft, minecraft_news)
   end
 end
 
-def selection_anwser(title, minecraft_news, arr)
-  case title
-  when 'Y'
-    puts 'Select news from 1 to 10'
-    selected_news = gets.chomp
-    puts minecraft_news.display_specific(selected_news, arr)
-    puts 'Thank you for prefer us'
-  when "N"
-    puts 'Thanks return soon'
-  when !"N" || !"Y"
-    puts 'wrong input'
-  end
-end
-
-welcome
-answer_for_title = get_anwser 
-minecraft_news, minecraft_arr, answer_for_select = title_anwser(answer_for_title, minecraft)
-selection_anwser(answer_for_select, minecraft_news, minecraft_arr)
-
+StartScraper.new.start

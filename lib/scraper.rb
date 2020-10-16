@@ -2,7 +2,6 @@ require 'open-uri'
 require 'nokogiri'
 
 class Scraper
-
   def display
     map_news
   end
