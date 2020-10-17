@@ -9,7 +9,8 @@ class DisplayForms
   end
 
   def display_specific(num, minecraft)
-    [Rainbow(minecraft[num.to_i - 1][1][0]).green, Rainbow(minecraft[num.to_i - 1][1][1]).magenta, minecraft[num.to_i - 1][1][2], "\n", minecraft[num.to_i - 1][1][3]]
+    rest_arr = [minecraft[num.to_i - 1][1][2], "\n", minecraft[num.to_i - 1][1][3]]
+    [Rainbow(minecraft[num.to_i - 1][1][0]).green, Rainbow(minecraft[num.to_i - 1][1][1]).magenta, rest_arr]
   end
 
   def all_post(minecraft)

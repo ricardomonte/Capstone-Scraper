@@ -111,7 +111,7 @@ module InteractionUser
 end
 
 class StartScraper
-  include InteractUser
+  include InteractionUser
   def start
     url = 'https://www.minecraftglobal.com/minecraft-news/'
     minecraft = Scraper.new(url).content
