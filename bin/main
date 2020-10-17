@@ -2,8 +2,9 @@
 
 require './lib/scraper'
 require './lib/display'
+require './lib/create_url'
 
-module InteractUser
+module InteractionUser
   def welcome
     puts 'Welcome to Minecraft News from'
     puts 'minecraftglobal.com'
@@ -30,56 +31,81 @@ module InteractUser
     end
   end
 
-  def getting_anwser(arr)
-    question = 'Do you want all the news?(y/n):'
+  def getting_anwser(arr, mine_news)
+    question = 'Do you want all the post?(y/n):'
     anwser = looping(question)
     case anwser
     when 'Y'
       puts 'Here you have'
+      sleep 2
+      puts mine_news.all_post(arr)
       sleep 1
-      puts arr
       anwser
     when 'N'
       anwser
     end
   end
 
-  def title(title, arr, mine_news)
-    if title == 'N'
-      question = 'Would you like to read the titles?(y/n)'
+  def titles(title, arr, mine_news)
+    if title == 'Y'
+      question = 'Would you like choose a post?(y/n)'
       anwser = looping(question)
       case anwser
       when 'Y'
-        puts 'Here you have'
+        puts 'Here you have a list with the titles'
         sleep 2
         puts mine_news.display_titles(arr)
-        return anwser.upcase
+        sleep 1
+        return anwser.upcase, mine_news.display_titles(arr)
       when 'N'
         return anwser.upcase
       end
     end
-    puts 'Thanks return soon'
+    puts 'Thanks come back soon'
     sleep 1
     exit
   end
 
   def selection(title, arr, mine_news)
     if title == 'Y'
-      question = 'do you want to read an specific news?(y/n)'
+      question = 'Would you like to read an specific post?(y/n)'
       specific_new = looping(question)
       case specific_new
       when 'Y'
-        question_num = 'Select news from 1 to 10'
+        question_num = 'Select post from 1 to 10'
         number = looping_selection(question_num)
         puts 'Here you have'
         sleep 2
         puts mine_news.display_specific(number, arr)
-        puts 'Thank you for prefer us'
+        return number, specific_new
+        sleep 1
       when 'N'
-        puts 'Thanks return soon'
+        puts 'Thanks come back soon'
+        sleep 1
+        exit
       end
     else
-      puts 'Thanks return soon'
+      puts 'Thanks come back soon'
+      sleep 1
+      exit
+    end
+  end
+
+  def full_news(title, arr, mine_news)
+    if title == 'Y'
+      question = 'Would you like to read the entire post that you selected?(y/n)'
+      full_news = looping(question)
+      case full_news
+      when 'Y'
+        puts 'Here you have'
+        sleep 2
+        puts mine_news.full_specific(arr)
+        puts 'Thank you for prefer us'
+      when 'N'
+        puts 'Thanks come back soon'
+      end
+    else
+      puts 'Thanks come back soon'
       sleep 1
       exit
     end
@@ -89,13 +115,23 @@ end
 class StartScraper
   include InteractUser
   def start
-    minecraft = Scraper.new.display
+    url = 'https://www.minecraftglobal.com/minecraft-news/'
+    minecraft = Scraper.new(url).content
     minecraft_news = DisplayForms.new
     welcome
-    anwser = getting_anwser(minecraft)
-    title = title(anwser, minecraft, minecraft_news)
-    selection(title, minecraft, minecraft_news)
+    anwser = getting_anwser(minecraft, minecraft_news)
+    anwser_title, title  = titles(anwser, minecraft, minecraft_news)
+    num, anwser_selection = selection(anwser_title, minecraft, minecraft_news)
+    page_url = CreateUrl.new.create_url(num, minecraft)
+    full_content = Scraper.new(page_url).complete_content
+    full_news(anwser_selection,full_content, minecraft_news)
   end
 end
 
 StartScraper.new.start
+
+# url = 'https://www.minecraftglobal.com/minecraft-news/'
+# minecraft = Scraper.new(url).content
+# minecraft_news = DisplayForms.new
+# p CreateInfo.new.create_url(1, minecraft)
+

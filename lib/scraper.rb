@@ -2,15 +2,23 @@ require 'open-uri'
 require 'nokogiri'
 
 class Scraper
-  def display
+
+  def initialize(url)
+    @url = url
+  end
+
+  def content
     map_news
+  end
+
+  def complete_content
+    complete_news
   end
 
   private
 
   def parse
-    url = 'https://www.minecraftglobal.com/minecraft-news/'
-    response = URI.open(url)
+    response = URI.open(@url)
     parsed_page = Nokogiri::HTML(response)
   end
 
@@ -39,5 +47,15 @@ class Scraper
 
   def map_news
     loop_over_news.map.with_index(1) { |x, i| [i, x] }
+  end
+
+  def complete_news
+    content = parse
+    arr = []
+    arr << content.css('h1.entry-title').text
+    arr << content.css('span.entry-author').text
+    arr << content.css('span.entry-date').text
+    arr << content.css('div.entry-content p').text
+    arr
   end
 end
