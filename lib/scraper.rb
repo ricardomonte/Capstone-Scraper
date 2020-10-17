@@ -2,7 +2,6 @@ require 'open-uri'
 require 'nokogiri'
 
 class Scraper
-
   def initialize(url)
     @url = url
   end

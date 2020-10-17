@@ -13,11 +13,11 @@ class DisplayForms
   end
 
   def all_post(minecraft)
-    minecraft
     (0...minecraft.length).map do |x|
       [Rainbow(minecraft[x][1][0]).green, Rainbow(minecraft[x][1][1]).magenta, minecraft[x][1].slice(2, 2), "\n"]
     end
   end
+  
   def full_specific(minecraft)
     ["\n", Rainbow(minecraft[0]).green, Rainbow(minecraft[1]).magenta, minecraft[2], "\n", minecraft[3], "\n"]
   end
