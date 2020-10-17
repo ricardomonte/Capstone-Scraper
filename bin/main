@@ -77,11 +77,9 @@ module InteractionUser
         puts 'Here you have'
         sleep 2
         puts mine_news.display_specific(number, arr)
-        return number, specific_new
-        sleep 1
+        [number, specific_new]
       when 'N'
         puts 'Thanks come back soon'
-        sleep 1
         exit
       end
     else
@@ -113,25 +111,19 @@ module InteractionUser
 end
 
 class StartScraper
-  include InteractUser
+  include InteractionUser
   def start
     url = 'https://www.minecraftglobal.com/minecraft-news/'
     minecraft = Scraper.new(url).content
     minecraft_news = DisplayForms.new
     welcome
     anwser = getting_anwser(minecraft, minecraft_news)
-    anwser_title, title  = titles(anwser, minecraft, minecraft_news)
+    anwser_title, title = titles(anwser, minecraft, minecraft_news)
     num, anwser_selection = selection(anwser_title, minecraft, minecraft_news)
     page_url = CreateUrl.new.create_url(num, minecraft)
     full_content = Scraper.new(page_url).complete_content
-    full_news(anwser_selection,full_content, minecraft_news)
+    full_news(anwser_selection, full_content, minecraft_news)
   end
 end
 
 StartScraper.new.start
-
-# url = 'https://www.minecraftglobal.com/minecraft-news/'
-# minecraft = Scraper.new(url).content
-# minecraft_news = DisplayForms.new
-# p CreateInfo.new.create_url(1, minecraft)
-
