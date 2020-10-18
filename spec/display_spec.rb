@@ -3,11 +3,11 @@ require_relative '../lib/display'
 describe Display do
   let(:url) { 'https://www.minecraftglobal.com/minecraft-news/' }
   let(:display) { Display.new }
-  let(:element1) {["\e[32mhttps://www.minecraftglobal.com/minecraft-news/\e[0m", "\e[35mb\e[0m", ["c", "\n", "hello world"]]}
-  let(:element2) {["\e[32mhttps://www.minecraftglobal.com/minecraft-news/\e[0m", "\e[35mb\e[0m", ["c", "\n", "d"]]}
-  let(:all) {[["\e[32mhttps://www.minecraftglobal.com/minecraft-news/\e[0m", "\e[35mb\e[0m", ["c", "hello world"],"\n"], ["\e[32mhttps://www.minecraftglobal.com/minecraft-news/\e[0m", "\e[35mb\e[0m", ["c", "d"], "\n"]]}
-  let(:all2) {[["\e[32mh\e[0m", "\e[35me\e[0m", ["l", "lo"],"\n"], ["\e[32mw\e[0m", "\e[35mo\e[0m", ["r", "ld"], "\n"]]}
-  
+  let(:element1) { ["\e[32mhttps://www.minecraftglobal.com/minecraft-news/\e[0m", "\e[35mb\e[0m", ['c', "\n", 'hello world']] }
+  let(:element2) { ["\e[32mhttps://www.minecraftglobal.com/minecraft-news/\e[0m", "\e[35mb\e[0m", %W[c \n d]] }
+  let(:all) { [["\e[32mhttps://www.minecraftglobal.com/minecraft-news/\e[0m", "\e[35mb\e[0m", ['c', 'hello world'], "\n"], ["\e[32mhttps://www.minecraftglobal.com/minecraft-news/\e[0m", "\e[35mb\e[0m", %w[c d], "\n"]] }
+  let(:all2) { [["\e[32mh\e[0m", "\e[35me\e[0m", %w[l lo], "\n"], ["\e[32mw\e[0m", "\e[35mo\e[0m", %w[r ld], "\n"]] }
+
   describe '#display_titles' do
     context 'will return an array with specific elements from an array' do
       it 'will return a number and the url from the array' do
@@ -45,7 +45,7 @@ describe Display do
         expect(display.all_post(mine)).to eq(all)
       end
       it 'will return first element and second element' do
-        dbl = double('some scraper', minecraft: [[1, ['h', 'e', 'l', 'lo', 'd']], [2, ['w', 'o', 'r', 'ld', 'e']]])
+        dbl = double('some scraper', minecraft: [[1, %w[h e l lo d]], [2, %w[w o r ld e]]])
         mine = dbl.minecraft
         expect(display.all_post(mine)).to eq(all2)
       end
@@ -56,7 +56,7 @@ describe Display do
       it 'will return the first and second element in color and the rest without color ' do
         dbl = double('some scraper', minecraft: ['hello', 'my name is', 'ricardo', 'montenegro'])
         mine = dbl.minecraft
-        expect(display.full_specific(mine)).to eq(["\n", "\e[32mhello\e[0m", "\e[35mmy name is\e[0m", "ricardo", "\n", "montenegro", "\n"])
+        expect(display.full_specific(mine)).to eq(["\n", "\e[32mhello\e[0m", "\e[35mmy name is\e[0m", 'ricardo', "\n", 'montenegro', "\n"])
       end
     end
   end
