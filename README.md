@@ -1,7 +1,9 @@
 # Capstone-Scraper
 
 # Minecraft News Scraper
-
+- This project:
+  - Scrap the web page https://www.minecraftglobal.com and return the news about Minecraft in a user-friendly way
+  
 - In this project I:
   - Create different files for the different classes
   - Test the public classes
@@ -17,10 +19,10 @@
 
 ## Built with
 
-Ruby
-nokogiri
-open-uri
-rainbow
+- Ruby
+- nokogiri
+- open-uri
+- rainbow
 
 ## Live Demo
 
