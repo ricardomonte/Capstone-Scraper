@@ -1,11 +1,11 @@
 require_relative '../lib/display'
 
 describe Display do
-  let(:url) { 'https://www.minecraftglobal.com/minecraft-news/' }
+  let(:url) { 'https://www.minecraftglobal.com/' }
   let(:display) { Display.new }
-  let(:element1) { ["\e[32mhttps://www.minecraftglobal.com/minecraft-news/\e[0m", "\e[35mb\e[0m", ['c', "\n", 'hello world']] }
-  let(:element2) { ["\e[32mhttps://www.minecraftglobal.com/minecraft-news/\e[0m", "\e[35mb\e[0m", %W[c \n d]] }
-  let(:all) { [["\e[32mhttps://www.minecraftglobal.com/minecraft-news/\e[0m", "\e[35mb\e[0m", ['c', 'hello world'], "\n"], ["\e[32mhttps://www.minecraftglobal.com/minecraft-news/\e[0m", "\e[35mb\e[0m", %w[c d], "\n"]] }
+  let(:element1) { ["\e[32mhttps://www.minecraftglobal.com/\e[0m", "\e[35mb\e[0m", ['c', "\n", 'hello world']] }
+  let(:element2) { ["\e[32mhttps://www.minecraftglobal.com/\e[0m", "\e[35mb\e[0m", %W[c \n d]] }
+  let(:all) { [["\e[32mhttps://www.minecraftglobal.com/\e[0m", "\e[35mb\e[0m", ['c', 'hello world'], "\n"], ["\e[32mhttps://www.minecraftglobal.com/minecraft-news/\e[0m", "\e[35mb\e[0m", %w[c d], "\n"]] }
   let(:all2) { [["\e[32mh\e[0m", "\e[35me\e[0m", %w[l lo], "\n"], ["\e[32mw\e[0m", "\e[35mo\e[0m", %w[r ld], "\n"]] }
 
   describe '#display_titles' do
@@ -54,9 +54,9 @@ describe Display do
   describe '#full_specific' do
     context 'will return an array with all the elements from the collection' do
       it 'will return the first and second element in color and the rest without color ' do
-        dbl = double('some scraper', minecraft: ['hello', 'my name is', 'ricardo', 'montenegro'])
+        dbl = double('some scraper', minecraft: %w[hi im r m])
         mine = dbl.minecraft
-        expect(display.full_specific(mine)).to eq(["\n", "\e[32mhello\e[0m", "\e[35mmy name is\e[0m", 'ricardo', "\n", 'montenegro', "\n"])
+        expect(display.full_specific(mine)).to eq(["\n", "\e[32mhi\e[0m", "\e[35mim\e[0m", 'r', "\n", 'm', "\n"])
       end
     end
   end
