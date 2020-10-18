@@ -5,7 +5,9 @@ describe Display do
   let(:display) { Display.new }
   let(:element1) { ["\e[32mhttps://www.minecraftglobal.com/\e[0m", "\e[35mb\e[0m", ['c', "\n", 'hello world']] }
   let(:element2) { ["\e[32mhttps://www.minecraftglobal.com/\e[0m", "\e[35mb\e[0m", %W[c \n d]] }
-  let(:all) { [["\e[32mhttps://www.minecraftglobal.com/\e[0m", "\e[35mb\e[0m", ['c', 'hello world'], "\n"], ["\e[32mhttps://www.minecraftglobal.com/\e[0m", "\e[35mb\e[0m", %w[c d], "\n"]] }
+  let(:element4) { [["\e[32mhttps://www.minecraftglobal.com/\e[0m", "\e[35mb\e[0m", %w[c d], "\n"]] }
+  let(:element3) { [["\e[32mhttps://www.minecraftglobal.com/\e[0m", "\e[35mb\e[0m", %w[c hello], "\n"]] }
+  let(:all) { element3 + element4 }
   let(:all2) { [["\e[32mh\e[0m", "\e[35me\e[0m", %w[l lo], "\n"], ["\e[32mw\e[0m", "\e[35mo\e[0m", %w[r ld], "\n"]] }
 
   describe '#display_titles' do
@@ -31,7 +33,7 @@ describe Display do
         expect(display.display_specific(2, mine)).to eq(element2)
       end
       it 'will not return the first element in the collection' do
-        dbl = double('some scraper', minecraft: [[1, [url, 'b', 'c', 'hello world', 'd']], [2, [url, 'b', 'c', 'd', 'e']]])
+        dbl = double('some scraper', minecraft: [[1, [url, 'b', 'c', 'hello', 'd']], [2, [url, 'b', 'c', 'd', 'e']]])
         mine = dbl.minecraft
         expect(display.display_specific(2, mine)).not_to eq(element1)
       end
@@ -40,7 +42,7 @@ describe Display do
   describe '#all_post' do
     context 'will return an array with all specific elements from the collection' do
       it 'will return first element and second element' do
-        dbl = double('some scraper', minecraft: [[1, [url, 'b', 'c', 'hello world', 'd']], [2, [url, 'b', 'c', 'd', 'e']]])
+        dbl = double('some scraper', minecraft: [[1, [url, 'b', 'c', 'hello', 'd']], [2, [url, 'b', 'c', 'd', 'e']]])
         mine = dbl.minecraft
         expect(display.all_post(mine)).to eq(all)
       end
