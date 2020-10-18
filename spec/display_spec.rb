@@ -5,7 +5,7 @@ describe Display do
   let(:display) { Display.new }
   let(:element1) { ["\e[32mhttps://www.minecraftglobal.com/\e[0m", "\e[35mb\e[0m", ['c', "\n", 'hello world']] }
   let(:element2) { ["\e[32mhttps://www.minecraftglobal.com/\e[0m", "\e[35mb\e[0m", %W[c \n d]] }
-  let(:all) { [["\e[32mhttps://www.minecraftglobal.com/\e[0m", "\e[35mb\e[0m", ['c', 'hello world'], "\n"], ["\e[32mhttps://www.minecraftglobal.com/minecraft-news/\e[0m", "\e[35mb\e[0m", %w[c d], "\n"]] }
+  let(:all) { [["\e[32mhttps://www.minecraftglobal.com/\e[0m", "\e[35mb\e[0m", ['c', 'hello world'], "\n"], ["\e[32mhttps://www.minecraftglobal.com/\e[0m", "\e[35mb\e[0m", %w[c d], "\n"]] }
   let(:all2) { [["\e[32mh\e[0m", "\e[35me\e[0m", %w[l lo], "\n"], ["\e[32mw\e[0m", "\e[35mo\e[0m", %w[r ld], "\n"]] }
 
   describe '#display_titles' do
@@ -13,12 +13,12 @@ describe Display do
       it 'will return a number and the url from the array' do
         dbl = double('some scraper', minecraft: [[1, [url, 'b', 'c', 'd', 'e']]])
         mine = dbl.minecraft
-        expect(display.display_titles(mine)).to eq(["1-\e[32mhttps://www.minecraftglobal.com/minecraft-news/\e[0m"])
+        expect(display.display_titles(mine)).to eq(["1-\e[32mhttps://www.minecraftglobal.com/\e[0m"])
       end
       it 'will not return a number an the url from the array' do
         dbl = double('some scraper', minecraft: [[1, ['a', url, 'c', 'd', 'hello world']]])
         mine = dbl.minecraft
-        expect(display.display_titles(mine)).not_to eq(["1-\e[32mhttps://www.minecraftglobal.com/minecraft-news/\e[0m"])
+        expect(display.display_titles(mine)).not_to eq(["1-\e[32mhttps://www.minecraftglobal.com/\e[0m"])
       end
     end
   end
