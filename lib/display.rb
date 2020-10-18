@@ -1,7 +1,7 @@
 require './lib/scraper'
 require 'rainbow'
 
-class DisplayForms
+class Display
   def display_titles(titles)
     (0...titles.length).map do |x|
       [titles[x][0], Rainbow(titles[x][1][0]).green].join('-')

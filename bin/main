@@ -115,7 +115,7 @@ class StartScraper
   def start
     url = 'https://www.minecraftglobal.com/minecraft-news/'
     minecraft = Scraper.new(url).content
-    minecraft_news = DisplayForms.new
+    minecraft_news = Display.new
     welcome
     anwser = getting_anwser(minecraft, minecraft_news)
     anwser_title, title = titles(anwser, minecraft, minecraft_news)
