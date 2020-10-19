@@ -1,2 +1,5 @@
 #!/usr/bin/env ruby
-# puts "hello world"
+
+require_relative '../lib/start_scraper'
+
+StartScraper.new.display_start
