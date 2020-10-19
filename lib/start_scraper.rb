@@ -1,7 +1,7 @@
 require_relative 'scraper'
 require_relative 'display'
 require_relative 'create_url'
-require_relative 'interaction'
+require_relative 'interaction_user'
 
 class StartScraper
   include InteractionUser

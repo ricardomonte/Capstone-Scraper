@@ -8,6 +8,8 @@ module InteractionUser
     puts 'minecraftglobal.com'
   end
 
+  private
+
   def looping(ask)
     loop do
       puts ask
@@ -28,6 +30,8 @@ module InteractionUser
       puts 'wrong input try again'
     end
   end
+
+  public
 
   def getting_anwser(arr, mine_news)
     question = 'Do you want all the post?(y/n):'
