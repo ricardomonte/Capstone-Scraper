@@ -1,4 +1,4 @@
-require './lib/scraper'
+require_relative 'scraper'
 require 'rainbow'
 
 class Display

@@ -1,4 +1,4 @@
-require './lib/scraper'
+require_relative 'scraper'
 
 class CreateUrl
   def create_url(num_title, minecraft)
