@@ -9,7 +9,7 @@
 
 - This project was created because as a Minecraft player I like to have easy access to the news about that game
  
-![screenshot](./screenshot/Screenshot.png)
+![screenshot](Screenshot.png)
 
 # How it works
 
